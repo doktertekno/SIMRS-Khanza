@@ -75,8 +75,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private YaskiReferensiKelurahan kelurahan=new YaskiReferensiKelurahan(null,false);
     private DlgCariPenyakit penyakit=new DlgCariPenyakit(null,false);
     private String id_tb_03="",kdwasor="",idrs="",URL="",requestJson="";
-    private final Properties prop = new Properties();
-
+    
     /** Creates new form DlgJnsPerawatan
      * @param parent
      * @param modal */
@@ -242,7 +241,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         PemeriksaanLaboratBulan2NoReg.setDocument(new batasInput((byte)15).getKata(PemeriksaanLaboratBulan2NoReg));
         PemeriksaanLaboratBulan3NoReg.setDocument(new batasInput((byte)15).getKata(PemeriksaanLaboratBulan3NoReg));
         PemeriksaanLaboratBulan5NoReg.setDocument(new batasInput((byte)15).getKata(PemeriksaanLaboratBulan5NoReg));
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -433,10 +432,9 @@ public final class DlgDataTB extends javax.swing.JDialog {
         });
         
         try {
-            prop.loadFromXML(new FileInputStream("setting/database.xml"));
-            kdwasor = prop.getProperty("KABUPATENSITT");
-            idrs=prop.getProperty("IDSITT");
-            URL = prop.getProperty("URLAPISITT");
+            kdwasor = koneksiDB.KABUPATENSITT();
+            idrs=koneksiDB.IDSITT();
+            URL = koneksiDB.URLAPISITT();
         } catch (Exception e) {
             System.out.println("E : "+e);
         }
@@ -452,8 +450,6 @@ public final class DlgDataTB extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        MnRestore = new javax.swing.JMenuItem();
         internalFrame1 = new widget.InternalFrame();
         jPanel3 = new javax.swing.JPanel();
         panelGlass8 = new widget.panelisi();
@@ -603,24 +599,6 @@ public final class DlgDataTB extends javax.swing.JDialog {
         Scroll = new widget.ScrollPane();
         tbJnsPerawatan = new widget.Table();
 
-        jPopupMenu1.setName("jPopupMenu1"); // NOI18N
-
-        MnRestore.setBackground(new java.awt.Color(255, 255, 254));
-        MnRestore.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnRestore.setForeground(new java.awt.Color(70, 70, 70));
-        MnRestore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
-        MnRestore.setText("Data Sampah");
-        MnRestore.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        MnRestore.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        MnRestore.setName("MnRestore"); // NOI18N
-        MnRestore.setPreferredSize(new java.awt.Dimension(200, 28));
-        MnRestore.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnRestoreActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(MnRestore);
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
@@ -630,7 +608,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pasien Teridentifikasi TB ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Pasien Teridentifikasi TB ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -780,7 +758,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         jLabel58.setPreferredSize(new java.awt.Dimension(55, 23));
         panelGlass9.add(jLabel58);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -793,7 +771,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         jLabel59.setPreferredSize(new java.awt.Dimension(24, 23));
         panelGlass9.add(jLabel59);
 
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -847,7 +825,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         internalFrame1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         TabRawat.setBackground(new java.awt.Color(254, 255, 254));
-        TabRawat.setForeground(new java.awt.Color(70, 70, 70));
+        TabRawat.setForeground(new java.awt.Color(50,50,50));
         TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.setName("TabRawat"); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -994,7 +972,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel12);
         jLabel12.setBounds(270, 160, 54, 23);
 
-        TanggalLaporan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019 11:24:07" }));
+        TanggalLaporan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019 07:14:57" }));
         TanggalLaporan.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         TanggalLaporan.setName("TanggalLaporan"); // NOI18N
         TanggalLaporan.setOpaque(false);
@@ -1385,7 +1363,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel23);
         jLabel23.setBounds(532, 250, 80, 23);
 
-        MulaiBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        MulaiBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         MulaiBerobat.setDisplayFormat("dd-MM-yyyy");
         MulaiBerobat.setName("MulaiBerobat"); // NOI18N
         MulaiBerobat.setOpaque(false);
@@ -1637,7 +1615,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel31);
         jLabel31.setBounds(0, 440, 100, 23);
 
-        AkhirBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        AkhirBerobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         AkhirBerobat.setDisplayFormat("dd-MM-yyyy");
         AkhirBerobat.setName("AkhirBerobat"); // NOI18N
         AkhirBerobat.setOpaque(false);
@@ -1669,7 +1647,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(jLabel32);
         jLabel32.setBounds(512, 440, 100, 23);
 
-        DianjurkanTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        DianjurkanTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         DianjurkanTesHIV.setDisplayFormat("dd-MM-yyyy");
         DianjurkanTesHIV.setName("DianjurkanTesHIV"); // NOI18N
         DianjurkanTesHIV.setOpaque(false);
@@ -1681,7 +1659,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
         FormInput.add(DianjurkanTesHIV);
         DianjurkanTesHIV.setBounds(615, 440, 90, 23);
 
-        TanggalTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "02-04-2019" }));
+        TanggalTesHIV.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-04-2019" }));
         TanggalTesHIV.setDisplayFormat("dd-MM-yyyy");
         TanggalTesHIV.setName("TanggalTesHIV"); // NOI18N
         TanggalTesHIV.setOpaque(false);
@@ -1902,13 +1880,11 @@ public final class DlgDataTB extends javax.swing.JDialog {
         internalFrame3.setLayout(new java.awt.BorderLayout(1, 1));
 
         Scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        Scroll.setComponentPopupMenu(jPopupMenu1);
         Scroll.setName("Scroll"); // NOI18N
         Scroll.setOpaque(true);
 
         tbJnsPerawatan.setAutoCreateRowSorter(true);
         tbJnsPerawatan.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
-        tbJnsPerawatan.setComponentPopupMenu(jPopupMenu1);
         tbJnsPerawatan.setName("tbJnsPerawatan"); // NOI18N
         tbJnsPerawatan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1967,7 +1943,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
             try {
                 headers = new HttpHeaders();
                 headers.add("X-rs-id",idrs);
-                headers.add("TimeStamp",String.valueOf(api.GetUTCdatetimeAsString())); 
+                headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString())); 
                 headers.add("X-pass",api.getHmac()); 
                 headers.add("Content-Type","application/json");
                 requestJson ="{" +
@@ -2029,7 +2005,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
                     "\"nourut_pasien\":\""+TNoRM.getText()+"\"," +
                     "\"no_bpjs\":\""+NoKartu.getText()+"\"," +
                     "\"tgl_lahir\":\""+Tanggal.getText()+"\"," +
-                    "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"" +
+                    "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"," +
+                    "\"asal_poli\":\""+Sequel.cariIsi("select nm_poli from poliklinik where kd_poli=?",Sequel.cariIsi("select kd_poli from reg_periksa where no_rawat=?",TNoRw.getText()))+"\"" +
                 "}";
                 System.out.println(requestJson);
                 requestEntity = new HttpEntity(requestJson,headers);
@@ -2132,7 +2109,7 @@ public final class DlgDataTB extends javax.swing.JDialog {
                 try {
                     headers = new HttpHeaders();
                     headers.add("X-rs-id",idrs);
-                    headers.add("TimeStamp",String.valueOf(api.GetUTCdatetimeAsString())); 
+                    headers.add("X-Timestamp",String.valueOf(api.GetUTCdatetimeAsString())); 
                     headers.add("X-pass",api.getHmac()); 
                     headers.add("Content-Type","application/json");
                     if(tbJnsPerawatan.getValueAt(tbJnsPerawatan.getSelectedRow(),59).toString().equals("")){
@@ -2195,7 +2172,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
                             "\"nourut_pasien\":\""+TNoRM.getText()+"\"," +
                             "\"no_bpjs\":\""+NoKartu.getText()+"\"," +
                             "\"tgl_lahir\":\""+Tanggal.getText()+"\"," +
-                            "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"" +
+                            "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"," +
+                            "\"asal_poli\":\""+Sequel.cariIsi("select nm_poli from poliklinik where kd_poli=?",Sequel.cariIsi("select kd_poli from reg_periksa where no_rawat=?",TNoRw.getText()))+"\"" +
                         "}";
                         System.out.println(requestJson);
                         requestEntity = new HttpEntity(requestJson,headers);
@@ -2263,7 +2241,8 @@ public final class DlgDataTB extends javax.swing.JDialog {
                             "\"nourut_pasien\":\""+TNoRM.getText()+"\"," +
                             "\"no_bpjs\":\""+NoKartu.getText()+"\"," +
                             "\"tgl_lahir\":\""+Tanggal.getText()+"\"," +
-                            "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"" +
+                            "\"kode_icd_x\":\""+kdpenyakit.getText()+"\"," +
+                            "\"asal_poli\":\""+Sequel.cariIsi("select nm_poli from poliklinik where kd_poli=?",Sequel.cariIsi("select kd_poli from reg_periksa where no_rawat=?",TNoRw.getText()))+"\"" +
                         "}";
                         System.out.println(requestJson);
                         requestEntity = new HttpEntity(requestJson,headers);
@@ -2427,13 +2406,6 @@ public final class DlgDataTB extends javax.swing.JDialog {
             tampil();
         }
     }//GEN-LAST:event_TabRawatMouseClicked
-
-    private void MnRestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnRestoreActionPerformed
-        DlgRestoreTarifOperasi restore=new DlgRestoreTarifOperasi(null,true);
-        restore.setSize(internalFrame1.getWidth()-20,internalFrame1.getHeight()-20);
-        restore.setLocationRelativeTo(internalFrame1);
-        restore.setVisible(true);
-    }//GEN-LAST:event_MnRestoreActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if(this.getHeight()<750){   
@@ -3085,7 +3057,6 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private widget.TextBox KeteranganSO;
     private widget.Label LCount;
     private widget.ComboBox Lokasi;
-    private javax.swing.JMenuItem MnRestore;
     private widget.Tanggal MulaiBerobat;
     private widget.TextBox NIK;
     private widget.TextBox NoKartu;
@@ -3190,7 +3161,6 @@ public final class DlgDataTB extends javax.swing.JDialog {
     private widget.Label jLabel8;
     private widget.Label jLabel9;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private widget.TextBox kdpenyakit;
     private widget.TextBox nmpenyakit;
     private widget.panelisi panelGlass8;

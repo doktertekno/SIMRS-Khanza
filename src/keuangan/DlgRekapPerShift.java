@@ -226,7 +226,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rekap Uang Pershift ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rekap Uang Pershift ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
@@ -317,7 +317,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
 
         TabRawat.setBackground(new java.awt.Color(250, 255, 245));
         TabRawat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(241, 246, 236)));
-        TabRawat.setForeground(new java.awt.Color(70, 70, 70));
+        TabRawat.setForeground(new java.awt.Color(50,50,50));
         TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.setName("TabRawat"); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -469,7 +469,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
             }else if(tabModeRalan.getRowCount()!=0){
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabModeRalan.getRowCount();r++){  
                         Sequel.menyimpan("temporary","'0','"+
                                         tabModeRalan.getValueAt(r,0).toString().replaceAll("'","`") +"','"+
@@ -505,7 +505,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
             }else if(tabModeRanap.getRowCount()!=0){
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabModeRanap.getRowCount();r++){  
                         Sequel.menyimpan("temporary","'0','"+
                                         tabModeRanap.getValueAt(r,0).toString().replaceAll("'","`") +"','"+
@@ -545,7 +545,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
             }else if(tabModePemasukan.getRowCount()!=0){
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabModePemasukan.getRowCount();r++){  
                         Sequel.menyimpan("temporary","'0','"+
                                         tabModePemasukan.getValueAt(r,0).toString().replaceAll("'","`") +"','"+
@@ -571,7 +571,7 @@ public class DlgRekapPerShift extends javax.swing.JDialog {
             }else if(tabModePengeluaran.getRowCount()!=0){
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabModePengeluaran.getRowCount();r++){  
                         Sequel.menyimpan("temporary","'0','"+
                                         tabModePengeluaran.getValueAt(r,0).toString().replaceAll("'","`") +"','"+

@@ -41,6 +41,8 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
     private ResultSet rs,rs2;
     private double tagihan=0;
     private Jurnal jur=new Jurnal();
+    private String aktifkanbatch="no";
+    private boolean sukses=true;
 
     /** Creates new form DlgProgramStudi
      * @param parent
@@ -49,6 +51,13 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        try {
+            aktifkanbatch = koneksiDB.AKTIFKANBATCHOBAT();
+        } catch (Exception e) {
+            System.out.println("E : "+e);
+            aktifkanbatch = "no";
+        }
+        
         Object[] row={"No.Faktur","Suplier","Petugas","Barang",
                     "Satuan","Jml.Beli","Harga Beli(Rp)","SubTotal(Rp)",
                     "Disk(%)","Bsr.Disk(Rp)","Total(Rp)"};
@@ -96,7 +105,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
         kdjenis.setDocument(new batasInput((byte)4).getKata(kdjenis));
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));  
         
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -350,12 +359,11 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
 
         ppHapus.setBackground(new java.awt.Color(255, 255, 254));
         ppHapus.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppHapus.setForeground(new java.awt.Color(70, 70, 70));
+        ppHapus.setForeground(new java.awt.Color(50,50,50));
         ppHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         ppHapus.setText("Hapus Data Penerimaan");
         ppHapus.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppHapus.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppHapus.setIconTextGap(8);
         ppHapus.setName("ppHapus"); // NOI18N
         ppHapus.setPreferredSize(new java.awt.Dimension(195, 26));
         ppHapus.addActionListener(new java.awt.event.ActionListener() {
@@ -367,12 +375,11 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
 
         ppBayar.setBackground(new java.awt.Color(255, 255, 254));
         ppBayar.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppBayar.setForeground(new java.awt.Color(70, 70, 70));
+        ppBayar.setForeground(new java.awt.Color(50,50,50));
         ppBayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         ppBayar.setText("Bayar Tagihan");
         ppBayar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppBayar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppBayar.setIconTextGap(8);
         ppBayar.setName("ppBayar"); // NOI18N
         ppBayar.setPreferredSize(new java.awt.Dimension(195, 26));
         ppBayar.addActionListener(new java.awt.event.ActionListener() {
@@ -384,12 +391,11 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
 
         ppUbah.setBackground(new java.awt.Color(255, 255, 254));
         ppUbah.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppUbah.setForeground(new java.awt.Color(70, 70, 70));
+        ppUbah.setForeground(new java.awt.Color(50,50,50));
         ppUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         ppUbah.setText("Ubah Penerimaan");
         ppUbah.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppUbah.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppUbah.setIconTextGap(8);
         ppUbah.setName("ppUbah"); // NOI18N
         ppUbah.setPreferredSize(new java.awt.Dimension(195, 26));
         ppUbah.addActionListener(new java.awt.event.ActionListener() {
@@ -408,7 +414,7 @@ public class DlgCariPemesanan extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Cari Penerimaan Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Cari Penerimaan Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -970,7 +976,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             TCari.requestFocus();
         }else if(tabMode.getRowCount()!=0){
             
-            Sequel.queryu("delete from temporary");
+            Sequel.queryu("truncate table temporary");
             int row=tabMode.getRowCount();
             for(int i=0;i<row;i++){  
                 Sequel.menyimpan("temporary","'0','"+
@@ -1019,25 +1025,37 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
       int reply = JOptionPane.showConfirmDialog(rootPane,"Eeiiiiiits, yakin mau dihapus...??","Konfirmasi",JOptionPane.YES_NO_OPTION);
       if (reply == JOptionPane.YES_OPTION) {
           try {
-              
               pscaripesan=koneksi.prepareStatement("select no_faktur, tagihan, kd_bangsal,tgl_faktur,status from pemesanan where no_faktur=?");
               try {
                  pscaripesan.setString(1,tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString());
                  rs=pscaripesan.executeQuery();
                  if(rs.next()){
+                     Sequel.AutoComitFalse();
+                     sukses=true;
                      psdetailpesan=koneksi.prepareStatement("select kode_brng,jumlah2,no_batch,no_faktur from detailpesan where no_faktur=? ");
                      try {
                          psdetailpesan.setString(1,rs.getString(1));
                          rs2=psdetailpesan.executeQuery();
                          while(rs2.next()){
-                             Trackobat.catatRiwayat(rs2.getString("kode_brng"),0,rs2.getDouble("jumlah2"),"Penerimaan",akses.getkode(),rs.getString("kd_bangsal"),"Hapus");
-                             Sequel.menyimpan("gudangbarang","'"+rs2.getString("kode_brng") +"','"+rs.getString("kd_bangsal") +"','-"+rs2.getString("jumlah2") +"'", 
-                                              "stok=stok-'"+rs2.getString("jumlah2") +"'","kode_brng='"+rs2.getString("kode_brng")+"' and kd_bangsal='"+rs.getString("kd_bangsal") +"'");
-                             Sequel.queryu3("delete from data_batch where kode_brng=? and no_batch=?",2,new String[]{
-                                 rs2.getString("kode_brng"),rs2.getString("no_batch")
-                             });
+                             if(aktifkanbatch.equals("yes")){
+                                Trackobat.catatRiwayat(rs2.getString("kode_brng"),0,rs2.getDouble("jumlah2"),"Penerimaan",akses.getkode(),rs.getString("kd_bangsal"),"Hapus",rs2.getString("no_batch"),rs2.getString("no_faktur"));
+                                Sequel.menyimpan("gudangbarang","'"+rs2.getString("kode_brng") +"','"+rs.getString("kd_bangsal") +"','-"+rs2.getString("jumlah2")+"','"+rs2.getString("no_batch")+"','"+rs2.getString("no_faktur")+"'", 
+                                                  "stok=stok-'"+rs2.getString("jumlah2") +"'","kode_brng='"+rs2.getString("kode_brng")+"' and kd_bangsal='"+rs.getString("kd_bangsal") +"' and no_batch='"+rs2.getString("no_batch")+"' and no_faktur='"+rs2.getString("no_faktur")+"'");
+                                Sequel.queryu3("delete from data_batch where kode_brng=? and no_batch=? and no_faktur=?",3,new String[]{
+                                    rs2.getString("kode_brng"),rs2.getString("no_batch"),rs2.getString("no_faktur")
+                                }); 
+                             }else{
+                                Trackobat.catatRiwayat(rs2.getString("kode_brng"),0,rs2.getDouble("jumlah2"),"Penerimaan",akses.getkode(),rs.getString("kd_bangsal"),"Hapus","","");
+                                Sequel.menyimpan("gudangbarang","'"+rs2.getString("kode_brng") +"','"+rs.getString("kd_bangsal") +"','-"+rs2.getString("jumlah2")+"','',''", 
+                                                  "stok=stok-'"+rs2.getString("jumlah2") +"'","kode_brng='"+rs2.getString("kode_brng")+"' and kd_bangsal='"+rs.getString("kd_bangsal") +"' and no_batch='' and no_faktur=''");
+                                Sequel.queryu3("delete from data_batch where kode_brng=? and no_batch=? and no_faktur=?",3,new String[]{
+                                    rs2.getString("kode_brng"),"",""
+                                }); 
+                             }  
                          }
+                         sukses=true;
                      } catch (Exception e) {
+                         sukses=false;
                          System.out.println("Notif 2 : "+e);
                      } finally{
                          if(rs2!=null){
@@ -1048,16 +1066,30 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                          }
                      }
 
-                     Sequel.queryu("delete from tampjurnal");
-                     Sequel.menyimpan("tampjurnal","?,?,?,?","Rekening",4,new String[]{
-                         Sequel.cariIsi("select Pemesanan_Obat from set_akun"),"PERSEDIAAN BARANG","0",rs.getString("tagihan")
-                     });    
-                     Sequel.menyimpan("tampjurnal","?,?,?,?","Rekening",4,new String[]{
-                         Sequel.cariIsi("select Kontra_Pemesanan_Obat from set_akun"),"HUTANG USAHA",rs.getString("tagihan"),"0"
-                     }); 
-                     jur.simpanJurnal(rs.getString("no_faktur"),Sequel.cariIsi("select current_date()"),"U","BATAL TRANSAKSI PENERIMAAN BARANG DI "+Sequel.cariIsi("select nm_bangsal from bangsal where kd_bangsal=?",rs.getString("kd_bangsal")).toUpperCase());
-                     Sequel.queryu2("delete from pemesanan where no_faktur=?",1,new String[]{tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString()});
+                     if(sukses==true){
+                        Sequel.queryu("delete from tampjurnal");
+                        Sequel.menyimpan("tampjurnal","?,?,?,?","Rekening",4,new String[]{
+                            Sequel.cariIsi("select Pemesanan_Obat from set_akun"),"PERSEDIAAN BARANG","0",rs.getString("tagihan")
+                        });    
+                        Sequel.menyimpan("tampjurnal","?,?,?,?","Rekening",4,new String[]{
+                            Sequel.cariIsi("select Kontra_Pemesanan_Obat from set_akun"),"HUTANG USAHA",rs.getString("tagihan"),"0"
+                        }); 
+                        sukses=jur.simpanJurnal(rs.getString("no_faktur"),Sequel.cariIsi("select current_date()"),"U","BATAL TRANSAKSI PENERIMAAN BARANG DI "+Sequel.cariIsi("select nm_bangsal from bangsal where kd_bangsal=?",rs.getString("kd_bangsal")).toUpperCase()+", OLEH "+akses.getkode()); 
+                     }
+                        
+                     if(sukses==true){
+                        Sequel.queryu2("delete from pemesanan where no_faktur=?",1,new String[]{tbDokter.getValueAt(tbDokter.getSelectedRow(),0).toString()});
+                        Sequel.Commit();
+                     }else{
+                        sukses=false;
+                        JOptionPane.showMessageDialog(null,"Terjadi kesalahan saat pemrosesan data, transaksi dibatalkan.\nPeriksa kembali data sebelum melanjutkan menyimpan..!!");
+                        Sequel.RollBack();
+                     }  
+                     Sequel.AutoComitTrue();
                  } 
+                 if(sukses==true){
+                    tampil();
+                 }
               } catch (Exception e) {
                   System.out.println("Notif : "+e);
               } finally{
@@ -1068,10 +1100,7 @@ private void ppHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
                       pscaripesan.close();
                   }
               }
-
-              
-              tampil();
-          } catch (SQLException ex) {
+          } catch (Exception ex) {
               System.out.println(ex);
           }  
       }

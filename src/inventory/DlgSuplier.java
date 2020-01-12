@@ -71,8 +71,9 @@ public class DlgSuplier extends javax.swing.JDialog {
         Bank.setDocument(new batasInput((byte)30).getKata(Bank));    
         NoRek.setDocument(new batasInput((byte)20).getKata(NoRek));    
         Telp.setDocument(new batasInput((byte)13).getOnlyAngka(Telp)); 
-        TCari.setDocument(new batasInput((byte)100).getKata(TCari));    
-        if(koneksiDB.cariCepat().equals("aktif")){
+        TCari.setDocument(new batasInput((byte)100).getKata(TCari));      
+        Bank.setDocument(new batasInput((byte)30).getKata(Bank));  
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -152,7 +153,7 @@ public class DlgSuplier extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Supplier Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Supplier Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 

@@ -119,7 +119,7 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
         tbBangsal3.setDefaultRenderer(Object.class, new WarnaTable());
 
         TKd.setDocument(new batasInput((byte)20).getKata(TKd));
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -211,12 +211,12 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Kegiatan Farmasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Data Kegiatan Farmasi ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
         TabRawat.setBackground(new java.awt.Color(255, 255, 253));
-        TabRawat.setForeground(new java.awt.Color(70, 70, 70));
+        TabRawat.setForeground(new java.awt.Color(50,50,50));
         TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.setName("TabRawat"); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -229,7 +229,6 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
         Scroll.setName("Scroll"); // NOI18N
         Scroll.setOpaque(true);
 
-        tbBangsal.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbBangsal.setName("tbBangsal"); // NOI18N
         Scroll.setViewportView(tbBangsal);
 
@@ -239,7 +238,6 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
         Scroll2.setName("Scroll2"); // NOI18N
         Scroll2.setOpaque(true);
 
-        tbBangsal2.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbBangsal2.setName("tbBangsal2"); // NOI18N
         Scroll2.setViewportView(tbBangsal2);
 
@@ -249,7 +247,6 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
         Scroll3.setName("Scroll3"); // NOI18N
         Scroll3.setOpaque(true);
 
-        tbBangsal3.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbBangsal3.setName("tbBangsal3"); // NOI18N
         Scroll3.setViewportView(tbBangsal3);
 
@@ -394,7 +391,7 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
             param.put("tanggal",Tgl2.getDate());   
             if(TabRawat.getSelectedIndex()==0){
                             
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabMode.getRowCount();r++){ 
                     if(!tbBangsal.getValueAt(r,0).toString().contains(">>")){
                         Sequel.menyimpan("temporary","'0','"+
@@ -408,7 +405,7 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
                 Valid.MyReport("rptKegiatanFarmasi1.jasper","report","::[ Laporan Kegiatan Farmasi ]::",param);
             }else if(TabRawat.getSelectedIndex()==1){
                             
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabMode2.getRowCount();r++){ 
                     if(!tbBangsal2.getValueAt(r,0).toString().contains(">>")){
                         Sequel.menyimpan("temporary","'0','"+
@@ -422,7 +419,7 @@ public final class DlgKegiatanFarmasi extends javax.swing.JDialog {
                 Valid.MyReport("rptKegiatanFarmasi2.jasper","report","::[ Laporan Kegiatan Farmasi ]::",param);
             }else if(TabRawat.getSelectedIndex()==2){
                             
-                Sequel.queryu("delete from temporary");
+                Sequel.queryu("truncate table temporary");
                 for(int r=0;r<tabMode3.getRowCount();r++){ 
                     if(!tbBangsal3.getValueAt(r,0).toString().contains(">>")){
                         Sequel.menyimpan("temporary","'0','"+

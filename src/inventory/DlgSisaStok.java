@@ -40,10 +40,10 @@ public class DlgSisaStok extends javax.swing.JDialog {
         LoadHTML.setEditorKit(kit);
         StyleSheet styleSheet = kit.getStyleSheet();
         styleSheet.addRule(
-                ".isi td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-bottom: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"+
-                ".isi2 td{font: 8.5px tahoma;height:12px;background: #ffffff;color:#464646;}"+
-                ".isi3 td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"+
-                ".isi4 td{font: 11px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"
+                ".isi td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-bottom: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"+
+                ".isi2 td{font: 8.5px tahoma;height:12px;background: #ffffff;color:#323232;}"+
+                ".isi3 td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"+
+                ".isi4 td{font: 11px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"
         );
         Document doc = kit.createDefaultDocument();
         LoadHTML.setDocument(doc);
@@ -78,7 +78,7 @@ public class DlgSisaStok extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sisa Stok Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sisa Stok Obat, Alkes & BHP Medis ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -260,16 +260,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             File g = new File("file2.css");
             BufferedWriter bg = new BufferedWriter(new FileWriter(g));
             bg.write(
-                ".isi td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-bottom: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"+
-                ".isi2 td{font: 8.5px tahoma;height:12px;background: #ffffff;color:#464646;}"+
-                ".isi3 td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"+
-                ".isi4 td{font: 11px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#464646;}"
+                ".isi td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-bottom: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"+
+                ".isi2 td{font: 8.5px tahoma;height:12px;background: #ffffff;color:#323232;}"+
+                ".isi3 td{border-right: 1px solid #e2e7dd;font: 8.5px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"+
+                ".isi4 td{font: 11px tahoma;height:12px;border-top: 1px solid #e2e7dd;background: #ffffff;color:#323232;}"
             );
             bg.close();
 
             File f = new File("sisastok.html");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            bw.write(LoadHTML.getText().replaceAll("<head>","<head><link href=\"file2.css\" rel=\"stylesheet\" type=\"text/css\" />"+
+            bw.write(LoadHTML.getText().replaceAll("<head>","<head>"+
+                "<link href=\"file2.css\" rel=\"stylesheet\" type=\"text/css\" />"+
                 "<table width='100%' border='0' align='center' cellpadding='3px' cellspacing='0' class='tbl_form'>"+
                 "<tr class='isi2'>"+
                 "<td valign='top' align='center'>"+
@@ -329,12 +330,12 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             htmlContent = new StringBuilder();
             htmlContent.append(                             
                 "<tr class='isi'>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' rowspan='2' width='27px'>No.</td>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' rowspan='2' width='90px'>Kode Barang</td>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' rowspan='2' width='200px'>Nama Barang</td>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' rowspan='2' width='50px'>Satuan</td>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' rowspan='2' width='80px'>Harga Satuan</td>"+
-                    "<td valign='middle' bgcolor='#fafff5' align='center' colspan='"+(i+1)+"'>Sisa Stok</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' rowspan='2' width='27px'>No.</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' rowspan='2' width='90px'>Kode Barang</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' rowspan='2' width='200px'>Nama Barang</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' rowspan='2' width='50px'>Satuan</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' rowspan='2' width='80px'>Harga Satuan</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' colspan='"+(i+1)+"'>Sisa Stok</td>"+
                 "</tr>"
             );
             
@@ -347,7 +348,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 while(rs.next()){
                     posisigudang[kolom]=rs.getString("kd_bangsal");
                     kolom++;
-                    htmlContent.append("<td valign='middle' bgcolor='#fafff5' align='center' width='80px'>"+rs.getString("nm_bangsal")+"</td>");
+                    htmlContent.append("<td valign='middle' bgcolor='#FFFAF8' align='center' width='80px'>"+rs.getString("nm_bangsal")+"</td>");
                 }
             } catch (Exception e) {
                 System.out.println("Akun Bayar : "+e);
@@ -360,13 +361,13 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 }
             }         
             htmlContent.append(
-                    "<td valign='middle' bgcolor='#fafff5' align='center' width='80px'>Total</td>"+
+                    "<td valign='middle' bgcolor='#FFFAF8' align='center' width='80px'>Total</td>"+
                 "</tr>"
             );  
             
             no=1;
             ps= koneksi.prepareStatement(
-                    "select kode_brng,nama_brng,kode_sat,h_beli from databarang where "+
+                    "select kode_brng,nama_brng,kode_sat,dasar from databarang where "+
                     "kode_brng like ? or nama_brng like ? order by kode_brng");
             try {
                 ps.setString(1,"%"+TCari.getText().trim()+"%");
@@ -380,9 +381,9 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                             "<td valign='middle' align='left'>"+rs.getString("kode_brng")+"</td>"+
                             "<td valign='middle' align='left'>"+rs.getString("nama_brng")+"</td>"+
                             "<td valign='middle' align='left'>"+rs.getString("kode_sat")+"</td>"+
-                            "<td valign='middle' align='right'>"+Valid.SetAngka(rs.getDouble("h_beli"))+"</td>");
+                            "<td valign='middle' align='right'>"+Valid.SetAngka(rs.getDouble("dasar"))+"</td>");
                     for(i=0;i<kolom;i++){
-                        stok=Sequel.cariIsiAngka2("select stok from gudangbarang where kode_brng=? and kd_bangsal=?",rs.getString("kode_brng"),posisigudang[i]);
+                        stok=Sequel.cariIsiAngka2("select sum(stok) from gudangbarang where kode_brng=? and kd_bangsal=?",rs.getString("kode_brng"),posisigudang[i]);
                         htmlContent.append("<td valign='middle' align='right'>"+Valid.SetAngka(stok)+"</td>");
                         total=total+stok;
                     }

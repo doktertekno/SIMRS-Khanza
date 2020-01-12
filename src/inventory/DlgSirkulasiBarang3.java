@@ -15,7 +15,6 @@ import fungsi.validasi;
 import fungsi.akses;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -30,17 +29,14 @@ import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import keuangan.Jurnal;
 import simrskhanza.DlgCariBangsal;
 
 public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
     private final DefaultTableModel tabMode;
     private sekuel Sequel=new sekuel();
     private validasi Valid=new validasi();
-    private Jurnal jur=new Jurnal();
     private Connection koneksi=koneksiDB.condb();
     private DlgCariBangsal bangsal = new DlgCariBangsal(null, false);
-    private Dimension screen=Toolkit.getDefaultToolkit().getScreenSize(); 
     private String lokasi="";
     private double ttltotaljual=0,totaljual=0,jumlahjual=0,ttltotalbeli=0,totalbeli=0,jumlahbeli=0,
                    ttltotalpesan=0,totalpesan=0,jumlahpesan=0,jumlahutd,totalutd,ttltotalutd,jumlahkeluar,totalkeluar,ttltotalkeluar,
@@ -48,7 +44,7 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
                    ttltotalretjual=0,totalretjual=0,jumlahretjual=0,ttltotalretpiut=0,totalretpiut=0,jumlahretpiut=0,
                    jumlahpasin=0,totalpasien=0,ttltotalpasien=0,stok=0,aset=0,ttlaset=0,jumlahrespulang=0,totalrespulang=0,
                    ttltotalrespulang=0,jumlahmutasimasuk=0,jumlahmutasikeluar=0,totalmutasimasuk=0,totalmutasikeluar=0,
-                   ttltotalmutasimasuk=0,ttltotalmutasikeluar=0;
+                   ttltotalmutasimasuk=0,ttltotalmutasikeluar=0,jumlahhibah=0,totalhibah=0,ttltotalhibah=0;
     private DlgBarang barang=new DlgBarang(null,false);
     private PreparedStatement ps,ps2;
     private ResultSet rs,rs2;
@@ -65,7 +61,7 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
                       "Piutang Jual","Piutang Jual(Rp)","Retur Beli","Retur Beli(Rp)","Retur Jual","Retur Jual(Rp)",
                       "Retur Piutang","Retur Piutang(Rp)","Pengambilan UTD","Pengambilan UTD(Rp)",
                       "Stok Keluar Medis","Stok Keluar Medis(Rp)","Resep Pulang","Resep Pulang(Rp)",
-                      "Mutasi Masuk","Mutasi Masuk(Rp)","Mutasi Keluar","Mutasi Keluar(Rp)"};
+                      "Mutasi Masuk","Mutasi Masuk(Rp)","Mutasi Keluar","Mutasi Keluar(Rp)","Hibah","Hibah(Rp)"};
         tabMode=new DefaultTableModel(null,row){
               @Override public boolean isCellEditable(int rowIndex, int colIndex){return false;}
         };
@@ -74,7 +70,7 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
         tbDokter.setPreferredScrollableViewportSize(new Dimension(800,800));
         tbDokter.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 33; i++) {
             TableColumn column = tbDokter.getColumnModel().getColumn(i);
             if(i==0){
                 column.setPreferredWidth(100);
@@ -138,12 +134,16 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
                 column.setPreferredWidth(80);
             }else if(i==30){
                 column.setPreferredWidth(110);
+            }else if(i==31){
+                column.setPreferredWidth(70);
+            }else if(i==32){
+                column.setPreferredWidth(110);
             }
         }
         tbDokter.setDefaultRenderer(Object.class, new WarnaTable());         
         
         TCari.setDocument(new batasInput((byte)100).getKata(TCari));
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             TCari.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -292,12 +292,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikJualBanyak.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikJualBanyak.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikJualBanyak.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikJualBanyak.setForeground(new java.awt.Color(50,50,50));
         ppGrafikJualBanyak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikJualBanyak.setText("Grafik 10 Barang Penjualan Terbanyak");
         ppGrafikJualBanyak.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikJualBanyak.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikJualBanyak.setIconTextGap(8);
         ppGrafikJualBanyak.setName("ppGrafikJualBanyak"); // NOI18N
         ppGrafikJualBanyak.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikJualBanyak.addActionListener(new java.awt.event.ActionListener() {
@@ -309,12 +308,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikJualDikit.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikJualDikit.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikJualDikit.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikJualDikit.setForeground(new java.awt.Color(50,50,50));
         ppGrafikJualDikit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikJualDikit.setText("Grafik 10 Barang Penjualan Tersedikit");
         ppGrafikJualDikit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikJualDikit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikJualDikit.setIconTextGap(8);
         ppGrafikJualDikit.setName("ppGrafikJualDikit"); // NOI18N
         ppGrafikJualDikit.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikJualDikit.addActionListener(new java.awt.event.ActionListener() {
@@ -326,12 +324,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikbeliBanyak.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikbeliBanyak.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikbeliBanyak.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikbeliBanyak.setForeground(new java.awt.Color(50,50,50));
         ppGrafikbeliBanyak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikbeliBanyak.setText("Grafik 10 Barang Pembelian Terbanyak");
         ppGrafikbeliBanyak.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikbeliBanyak.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikbeliBanyak.setIconTextGap(8);
         ppGrafikbeliBanyak.setName("ppGrafikbeliBanyak"); // NOI18N
         ppGrafikbeliBanyak.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikbeliBanyak.addActionListener(new java.awt.event.ActionListener() {
@@ -343,12 +340,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikbelidikit.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikbelidikit.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikbelidikit.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikbelidikit.setForeground(new java.awt.Color(50,50,50));
         ppGrafikbelidikit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikbelidikit.setText("Grafik 10 Barang Pembelian Tersedikit");
         ppGrafikbelidikit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikbelidikit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikbelidikit.setIconTextGap(8);
         ppGrafikbelidikit.setName("ppGrafikbelidikit"); // NOI18N
         ppGrafikbelidikit.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikbelidikit.addActionListener(new java.awt.event.ActionListener() {
@@ -360,12 +356,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikPiutangBanyak.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikPiutangBanyak.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikPiutangBanyak.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikPiutangBanyak.setForeground(new java.awt.Color(50,50,50));
         ppGrafikPiutangBanyak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikPiutangBanyak.setText("Grafik 10 Barang Piutang Terbanyak");
         ppGrafikPiutangBanyak.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikPiutangBanyak.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikPiutangBanyak.setIconTextGap(8);
         ppGrafikPiutangBanyak.setName("ppGrafikPiutangBanyak"); // NOI18N
         ppGrafikPiutangBanyak.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikPiutangBanyak.addActionListener(new java.awt.event.ActionListener() {
@@ -377,12 +372,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikPiutangDikit.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikPiutangDikit.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikPiutangDikit.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikPiutangDikit.setForeground(new java.awt.Color(50,50,50));
         ppGrafikPiutangDikit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikPiutangDikit.setText("Grafik 10 Barang Piutang Tersedikit");
         ppGrafikPiutangDikit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikPiutangDikit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikPiutangDikit.setIconTextGap(8);
         ppGrafikPiutangDikit.setName("ppGrafikPiutangDikit"); // NOI18N
         ppGrafikPiutangDikit.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikPiutangDikit.addActionListener(new java.awt.event.ActionListener() {
@@ -394,12 +388,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikResepPaliingBanyak.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikResepPaliingBanyak.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikResepPaliingBanyak.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikResepPaliingBanyak.setForeground(new java.awt.Color(50,50,50));
         ppGrafikResepPaliingBanyak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikResepPaliingBanyak.setText("Grafik 10 Barang Resep Ke Pasien Terbanyak");
         ppGrafikResepPaliingBanyak.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikResepPaliingBanyak.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikResepPaliingBanyak.setIconTextGap(8);
         ppGrafikResepPaliingBanyak.setName("ppGrafikResepPaliingBanyak"); // NOI18N
         ppGrafikResepPaliingBanyak.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikResepPaliingBanyak.addActionListener(new java.awt.event.ActionListener() {
@@ -411,12 +404,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppGrafikResepPaliingSedikit.setBackground(new java.awt.Color(255, 255, 254));
         ppGrafikResepPaliingSedikit.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppGrafikResepPaliingSedikit.setForeground(new java.awt.Color(70, 70, 70));
+        ppGrafikResepPaliingSedikit.setForeground(new java.awt.Color(50,50,50));
         ppGrafikResepPaliingSedikit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppGrafikResepPaliingSedikit.setText("Grafik 10 Barang Resep Ke Pasien Tersedikit");
         ppGrafikResepPaliingSedikit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppGrafikResepPaliingSedikit.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppGrafikResepPaliingSedikit.setIconTextGap(8);
         ppGrafikResepPaliingSedikit.setName("ppGrafikResepPaliingSedikit"); // NOI18N
         ppGrafikResepPaliingSedikit.setPreferredSize(new java.awt.Dimension(300, 25));
         ppGrafikResepPaliingSedikit.addActionListener(new java.awt.event.ActionListener() {
@@ -428,12 +420,11 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
         ppLokasi.setBackground(new java.awt.Color(255, 255, 254));
         ppLokasi.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        ppLokasi.setForeground(new java.awt.Color(70, 70, 70));
+        ppLokasi.setForeground(new java.awt.Color(50,50,50));
         ppLokasi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/Create-Ticket24.png"))); // NOI18N
         ppLokasi.setText("Tampilkan Per Lokasi");
         ppLokasi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ppLokasi.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        ppLokasi.setIconTextGap(8);
         ppLokasi.setName("ppLokasi"); // NOI18N
         ppLokasi.setPreferredSize(new java.awt.Dimension(180, 25));
         ppLokasi.addActionListener(new java.awt.event.ActionListener() {
@@ -452,7 +443,7 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
             }
         });
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sirkulasi Obat, Alkes & BHP Medis Keluar Masuk ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Sirkulasi Obat, Alkes & BHP Medis Keluar Masuk ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -471,7 +462,6 @@ public class DlgSirkulasiBarang3 extends javax.swing.JDialog {
 
             }
         ));
-        tbDokter.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbDokter.setComponentPopupMenu(jPopupMenu1);
         tbDokter.setName("tbDokter"); // NOI18N
         scrollPane1.setViewportView(tbDokter);
@@ -648,10 +638,10 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
             TCari.requestFocus();
         }else if(tabMode.getRowCount()!=0){
             
-            Sequel.queryu("delete from temporary");
+            Sequel.queryu("truncate table temporary");
             int row=tabMode.getRowCount();
             for(int i=0;i<row;i++){  
-                Sequel.menyimpan("temporary","'0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'','','','','',''",31,new String[]{
+                Sequel.menyimpan("temporary","'0',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'','','',''",33,new String[]{
                     tabMode.getValueAt(i,0).toString(),tabMode.getValueAt(i,1).toString(),tabMode.getValueAt(i,2).toString(),
                     tabMode.getValueAt(i,3).toString(),tabMode.getValueAt(i,4).toString(),tabMode.getValueAt(i,5).toString(),
                     tabMode.getValueAt(i,6).toString(),tabMode.getValueAt(i,7).toString(),tabMode.getValueAt(i,8).toString(),
@@ -662,7 +652,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                     tabMode.getValueAt(i,21).toString(),tabMode.getValueAt(i,22).toString(),tabMode.getValueAt(i,23).toString(),
                     tabMode.getValueAt(i,24).toString(),tabMode.getValueAt(i,25).toString(),tabMode.getValueAt(i,26).toString(),
                     tabMode.getValueAt(i,27).toString(),tabMode.getValueAt(i,28).toString(),tabMode.getValueAt(i,29).toString(),
-                    tabMode.getValueAt(i,30).toString()
+                    tabMode.getValueAt(i,30).toString(),tabMode.getValueAt(i,31).toString(),tabMode.getValueAt(i,32).toString()
                 }); 
             }
             
@@ -919,6 +909,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ttltotalretpiut=0;ttltotalpasien=0;ttlaset=0;
                 ttltotalutd=0;ttltotalkeluar=0;ttltotalrespulang=0;
                 ttltotalmutasikeluar=0;ttltotalmutasimasuk=0;
+                ttltotalhibah=0;
                 ps.setString(1,"%"+nmbar.getText()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
                 ps.setString(3,"%"+nmbar.getText()+"%");
@@ -928,13 +919,13 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 rs=ps.executeQuery();            
                 while(rs.next()){
                     totaljual=0;jumlahjual=0;totalbeli=0;jumlahbeli=0;totalpiutang=0;jumlahpiutang=0;
-                    totalpesan=0;jumlahpesan=0;jumlahrespulang=0;
+                    totalpesan=0;jumlahpesan=0;jumlahrespulang=0;jumlahhibah=0;totalhibah=0;
                     totalretbeli=0;jumlahretbeli=0;totalretjual=0;jumlahretjual=0;totalretpiut=0;jumlahretpiut=0;
                     jumlahpasin=0;stok=0;aset=0;totalrespulang=0;
                     jumlahutd=0;jumlahkeluar=0;totalkeluar=0;totalutd=0;
                     jumlahmutasikeluar=0;totalmutasikeluar=0;jumlahmutasimasuk=0;totalmutasimasuk=0;
 
-                    ps2=koneksi.prepareStatement("select sum(stok),(sum(stok)*h_beli) as aset "+
+                    ps2=koneksi.prepareStatement("select sum(stok),(sum(stok)*dasar) as aset "+
                         "from gudangbarang inner join databarang on gudangbarang.kode_brng=databarang.kode_brng "+
                         "where gudangbarang.kode_brng=?");
                     try {
@@ -1232,9 +1223,35 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         }
                     }
                     
+                    //hibah  
+                    ps2=koneksi.prepareStatement("select sum(detailhibah_obat_bhp.jumlah2), sum(detailhibah_obat_bhp.subtotaldiakui) "+
+                        " from hibah_obat_bhp inner join detailhibah_obat_bhp "+
+                        " on hibah_obat_bhp.no_hibah=detailhibah_obat_bhp.no_hibah "+
+                        " where detailhibah_obat_bhp.kode_brng=? and hibah_obat_bhp.tgl_hibah "+
+                        " between ? and ? ");
+                    try {
+                        ps2.setString(1,rs.getString(1));
+                        ps2.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                        ps2.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                        rs2=ps2.executeQuery();
+                        if(rs2.next()){                    
+                            jumlahhibah=rs2.getDouble(1);
+                            totalhibah=rs2.getDouble(2);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notifikasi Detail Hibah : "+e);
+                    } finally{
+                        if(rs2!=null){
+                            rs2.close();
+                        }
+                        if(ps2!=null){
+                            ps2.close();
+                        }
+                    } 
+                    
                     if((aset>0)||(jumlahbeli>0)||(jumlahpesan>0)||(jumlahjual>0)||(jumlahpasin>0)||(jumlahpiutang>0)||
                             (jumlahretbeli>0)||(jumlahretjual>0)||(jumlahretpiut>0)||(jumlahutd>0)||(jumlahkeluar>0)||
-                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)){
+                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)||(jumlahhibah>0)){
                         tabMode.addRow(new Object[]{rs.getString(1),rs.getString(2),
                            rs.getString(3),Valid.SetAngka(stok),Valid.SetAngka(aset),
                            Valid.SetAngka(jumlahbeli),Valid.SetAngka(totalbeli),
@@ -1249,7 +1266,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                            Valid.SetAngka(jumlahkeluar),Valid.SetAngka(totalkeluar),
                            Valid.SetAngka(jumlahrespulang),Valid.SetAngka(totalrespulang),
                            Valid.SetAngka(jumlahmutasimasuk),Valid.SetAngka(totalmutasimasuk),
-                           Valid.SetAngka(jumlahmutasikeluar),Valid.SetAngka(totalmutasikeluar)
+                           Valid.SetAngka(jumlahmutasikeluar),Valid.SetAngka(totalmutasikeluar),
+                           Valid.SetAngka(jumlahhibah),Valid.SetAngka(totalhibah)
                         }); 
                         ttltotalbeli=ttltotalbeli+totalbeli;
                         ttltotalpesan=ttltotalpesan+totalpesan;
@@ -1265,16 +1283,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ttltotalrespulang=ttltotalrespulang+totalrespulang;
                         ttltotalmutasimasuk=ttltotalmutasimasuk+totalmutasimasuk;
                         ttltotalmutasikeluar=ttltotalmutasikeluar+totalmutasikeluar;
+                        ttltotalhibah=ttltotalhibah+totalhibah;
                     }
                 }   
-                tabMode.addRow(new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}); 
+                tabMode.addRow(new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}); 
                 tabMode.addRow(new Object[]{"<>>","Total :","","",Valid.SetAngka(ttlaset),"",
                    Valid.SetAngka(ttltotalbeli),"",Valid.SetAngka(ttltotalpesan),"",
                    Valid.SetAngka(ttltotaljual),"",Valid.SetAngka(ttltotalpasien),"",
                    Valid.SetAngka(ttltotalpiutang),"",Valid.SetAngka(ttltotalretbeli),"",
                    Valid.SetAngka(ttltotalretjual),"",Valid.SetAngka(ttltotalretpiut),"",
                    Valid.SetAngka(ttltotalutd),"",Valid.SetAngka(ttltotalkeluar),"",
-                   Valid.SetAngka(ttltotalrespulang),"",Valid.SetAngka(ttltotalmutasimasuk),"",Valid.SetAngka(ttltotalmutasikeluar)
+                   Valid.SetAngka(ttltotalrespulang),"",Valid.SetAngka(ttltotalmutasimasuk),"",Valid.SetAngka(ttltotalmutasikeluar),"",Valid.SetAngka(ttltotalhibah)
                 }); 
             } catch (Exception e) {
                 System.out.println("Notifikasi Data Barang : "+e);
@@ -1309,6 +1328,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 ttltotalretpiut=0;ttltotalpasien=0;ttlaset=0;
                 ttltotalutd=0;ttltotalkeluar=0;ttltotalrespulang=0;
                 ttltotalmutasikeluar=0;ttltotalmutasimasuk=0;
+                ttltotalhibah=0;
                 ps.setString(1,"%"+nmbar.getText()+"%");
                 ps.setString(2,"%"+TCari.getText().trim()+"%");
                 ps.setString(3,"%"+nmbar.getText()+"%");
@@ -1318,13 +1338,13 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                 rs=ps.executeQuery();            
                 while(rs.next()){
                     totaljual=0;jumlahjual=0;totalbeli=0;jumlahbeli=0;totalpiutang=0;jumlahpiutang=0;
-                    totalpesan=0;jumlahpesan=0;jumlahrespulang=0;
+                    totalpesan=0;jumlahpesan=0;jumlahrespulang=0;jumlahhibah=0;totalhibah=0;
                     totalretbeli=0;jumlahretbeli=0;totalretjual=0;jumlahretjual=0;totalretpiut=0;jumlahretpiut=0;
                     jumlahpasin=0;stok=0;aset=0;totalrespulang=0;
                     jumlahutd=0;jumlahkeluar=0;totalkeluar=0;totalutd=0;
                     jumlahmutasikeluar=0;totalmutasikeluar=0;jumlahmutasimasuk=0;totalmutasimasuk=0;
 
-                    ps2=koneksi.prepareStatement("select sum(stok),(sum(stok)*h_beli) as aset "+
+                    ps2=koneksi.prepareStatement("select sum(stok),(sum(stok)*dasar) as aset "+
                         "from gudangbarang inner join databarang on gudangbarang.kode_brng=databarang.kode_brng "+
                         "where gudangbarang.kode_brng=? and gudangbarang.kd_bangsal=?");
                     try {
@@ -1683,9 +1703,36 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         }
                     }
                     
+                    //hibah  
+                    ps2=koneksi.prepareStatement("select sum(detailhibah_obat_bhp.jumlah2), sum(detailhibah_obat_bhp.subtotaldiakui) "+
+                        " from hibah_obat_bhp inner join detailhibah_obat_bhp "+
+                        " on hibah_obat_bhp.no_hibah=detailhibah_obat_bhp.no_hibah "+
+                        " where detailhibah_obat_bhp.kode_brng=? and hibah_obat_bhp.tgl_hibah "+
+                        " between ? and ? and hibah_obat_bhp.kd_bangsal=?");
+                    try {
+                        ps2.setString(1,rs.getString(1));
+                        ps2.setString(2,Valid.SetTgl(Tgl1.getSelectedItem()+""));
+                        ps2.setString(3,Valid.SetTgl(Tgl2.getSelectedItem()+""));
+                        ps2.setString(4,lokasi);
+                        rs2=ps2.executeQuery();
+                        if(rs2.next()){                    
+                            jumlahhibah=rs2.getDouble(1);
+                            totalhibah=rs2.getDouble(2);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Notifikasi Detail Hibah : "+e);
+                    } finally{
+                        if(rs2!=null){
+                            rs2.close();
+                        }
+                        if(ps2!=null){
+                            ps2.close();
+                        }
+                    }   
+                    
                     if((aset>0)||(jumlahbeli>0)||(jumlahpesan>0)||(jumlahjual>0)||(jumlahpasin>0)||(jumlahpiutang>0)||
                             (jumlahretbeli>0)||(jumlahretjual>0)||(jumlahretpiut>0)||(jumlahutd>0)||(jumlahkeluar>0)||
-                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)){
+                            (jumlahrespulang>0)||(jumlahmutasimasuk>0)||(jumlahmutasikeluar>0)||(jumlahhibah>0)){
                         tabMode.addRow(new Object[]{rs.getString(1),rs.getString(2),
                            rs.getString(3),Valid.SetAngka(stok),Valid.SetAngka(aset),
                            Valid.SetAngka(jumlahbeli),Valid.SetAngka(totalbeli),
@@ -1700,7 +1747,8 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                            Valid.SetAngka(jumlahkeluar),Valid.SetAngka(totalkeluar),
                            Valid.SetAngka(jumlahrespulang),Valid.SetAngka(totalrespulang),
                            Valid.SetAngka(jumlahmutasimasuk),Valid.SetAngka(totalmutasimasuk),
-                           Valid.SetAngka(jumlahmutasikeluar),Valid.SetAngka(totalmutasikeluar)
+                           Valid.SetAngka(jumlahmutasikeluar),Valid.SetAngka(totalmutasikeluar),
+                           Valid.SetAngka(jumlahhibah),Valid.SetAngka(totalhibah)
                         }); 
                         ttltotalbeli=ttltotalbeli+totalbeli;
                         ttltotalpesan=ttltotalpesan+totalpesan;
@@ -1716,16 +1764,17 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
                         ttltotalrespulang=ttltotalrespulang+totalrespulang;
                         ttltotalmutasimasuk=ttltotalmutasimasuk+totalmutasimasuk;
                         ttltotalmutasikeluar=ttltotalmutasikeluar+totalmutasikeluar;
+                        ttltotalhibah=ttltotalhibah+totalhibah;
                     }
                 }   
-                tabMode.addRow(new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}); 
+                tabMode.addRow(new Object[]{"","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}); 
                 tabMode.addRow(new Object[]{"<>>","Total :","","",Valid.SetAngka(ttlaset),"",
                    Valid.SetAngka(ttltotalbeli),"",Valid.SetAngka(ttltotalpesan),"",
                    Valid.SetAngka(ttltotaljual),"",Valid.SetAngka(ttltotalpasien),"",
                    Valid.SetAngka(ttltotalpiutang),"",Valid.SetAngka(ttltotalretbeli),"",
                    Valid.SetAngka(ttltotalretjual),"",Valid.SetAngka(ttltotalretpiut),"",
                    Valid.SetAngka(ttltotalutd),"",Valid.SetAngka(ttltotalkeluar),"",
-                   Valid.SetAngka(ttltotalrespulang),"",Valid.SetAngka(ttltotalmutasimasuk),"",Valid.SetAngka(ttltotalmutasikeluar)
+                   Valid.SetAngka(ttltotalrespulang),"",Valid.SetAngka(ttltotalmutasimasuk),"",Valid.SetAngka(ttltotalmutasikeluar),"",Valid.SetAngka(ttltotalhibah)
                 }); 
             } catch (Exception e) {
                 System.out.println("Notifikasi Data Barang : "+e);

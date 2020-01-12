@@ -38,7 +38,7 @@ public class PanelDiagnosa extends widget.panelisi {
     private ResultSet rs;
     private int jml=0,i=0,index=0;
     private String[] kode,nama,ciripny,keterangan,kategori,cirium,kode2,panjang,pendek;
-    private boolean[] pilih,pilih2;
+    private boolean[] pilih;
     public String norawat="",status="",norm="",tanggal1="",tanggal2="",keyword="";
     /**
      * Creates new form panelDiagnosa
@@ -218,7 +218,7 @@ public class PanelDiagnosa extends widget.panelisi {
         Diagnosa.setDocument(new batasInput((byte)100).getKata(Diagnosa));
         Prosedur.setDocument(new batasInput((byte)100).getKata(Prosedur));
         
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             Diagnosa.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -241,7 +241,7 @@ public class PanelDiagnosa extends widget.panelisi {
             });
         } 
         
-        if(koneksiDB.cariCepat().equals("aktif")){
+        if(koneksiDB.CARICEPAT().equals("aktif")){
             Prosedur.getDocument().addDocumentListener(new javax.swing.event.DocumentListener(){
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -299,9 +299,8 @@ public class PanelDiagnosa extends widget.panelisi {
         Scroll3 = new widget.ScrollPane();
         tbTindakanPasien = new widget.Table();
 
-        MnStatusBaru.setBackground(new java.awt.Color(255, 255, 255));
         MnStatusBaru.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnStatusBaru.setForeground(new java.awt.Color(70, 70, 70));
+        MnStatusBaru.setForeground(new java.awt.Color(50, 50, 50));
         MnStatusBaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         MnStatusBaru.setText("Status Penyakit Baru");
         MnStatusBaru.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -314,9 +313,8 @@ public class PanelDiagnosa extends widget.panelisi {
         });
         jPopupMenu1.add(MnStatusBaru);
 
-        MnStatusLama.setBackground(new java.awt.Color(255, 255, 255));
         MnStatusLama.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        MnStatusLama.setForeground(new java.awt.Color(70, 70, 70));
+        MnStatusLama.setForeground(new java.awt.Color(50, 50, 50));
         MnStatusLama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/category.png"))); // NOI18N
         MnStatusLama.setText("Status Penyakit Lama");
         MnStatusLama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -333,8 +331,7 @@ public class PanelDiagnosa extends widget.panelisi {
         setLayout(new java.awt.BorderLayout(1, 1));
 
         TabRawat.setBackground(new java.awt.Color(255, 255, 253));
-        TabRawat.setBorder(null);
-        TabRawat.setForeground(new java.awt.Color(70, 70, 70));
+        TabRawat.setForeground(new java.awt.Color(50, 50, 50));
         TabRawat.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         TabRawat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -387,8 +384,6 @@ public class PanelDiagnosa extends widget.panelisi {
 
         Scroll1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)));
         Scroll1.setOpaque(true);
-
-        tbDiagnosa.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         Scroll1.setViewportView(tbDiagnosa);
 
         FormData.add(Scroll1);
@@ -450,8 +445,6 @@ public class PanelDiagnosa extends widget.panelisi {
         Scroll.setOpaque(true);
 
         tbDiagnosaPasien.setAutoCreateRowSorter(true);
-        tbDiagnosaPasien.setBorder(null);
-        tbDiagnosaPasien.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbDiagnosaPasien.setComponentPopupMenu(jPopupMenu1);
         Scroll.setViewportView(tbDiagnosaPasien);
 
@@ -466,8 +459,6 @@ public class PanelDiagnosa extends widget.panelisi {
         Scroll3.setOpaque(true);
 
         tbTindakanPasien.setAutoCreateRowSorter(true);
-        tbTindakanPasien.setBorder(null);
-        tbTindakanPasien.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbTindakanPasien.setComponentPopupMenu(jPopupMenu1);
         Scroll3.setViewportView(tbTindakanPasien);
 
@@ -725,7 +716,7 @@ public class PanelDiagnosa extends widget.panelisi {
                     " penyakit.keterangan like ? or "+
                     " kategori_penyakit.nm_kategori like ? or "+
                     " kategori_penyakit.ciri_umum like ? "+
-                    "order by penyakit.kd_penyakit  LIMIT 100");
+                    "order by penyakit.kd_penyakit  LIMIT 1000");
             try {
                 pspenyakit.setString(1,"%"+Diagnosa.getText().trim()+"%");
                 pspenyakit.setString(2,"%"+Diagnosa.getText().trim()+"%");
@@ -899,6 +890,7 @@ public class PanelDiagnosa extends widget.panelisi {
     public void simpan(){
         try {
             koneksi.setAutoCommit(false);
+            index=1;
             for(i=0;i<tbDiagnosa.getRowCount();i++){ 
                 if(tbDiagnosa.getValueAt(i,0).toString().equals("true")){
                     if(Sequel.cariInteger(
@@ -916,7 +908,30 @@ public class PanelDiagnosa extends widget.panelisi {
                             norawat,tbDiagnosa.getValueAt(i,1).toString(),status,
                             Sequel.cariIsi("select ifnull(MAX(prioritas)+1,1) from diagnosa_pasien where no_rawat=? and status='"+status+"'",norawat),"Baru"
                         });
-                    }                            
+                    }  
+                    if(index==1){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_utama=?",2,new String[]{
+                            tbDiagnosa.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==2){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder=?",2,new String[]{
+                            tbDiagnosa.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==3){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder2=?",2,new String[]{
+                            tbDiagnosa.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==4){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder3=?",2,new String[]{
+                            tbDiagnosa.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==5){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder4=?",2,new String[]{
+                            tbDiagnosa.getValueAt(i,1).toString(),norawat
+                        });
+                    }
+                        
+                    index++;
                 }                    
             }
             koneksi.setAutoCommit(true);  
@@ -929,11 +944,32 @@ public class PanelDiagnosa extends widget.panelisi {
 
         try {
             koneksi.setAutoCommit(false);
+            index=1;
             for(i=0;i<tbProsedur.getRowCount();i++){ 
                 if(tbProsedur.getValueAt(i,0).toString().equals("true")){
                     Sequel.menyimpan("prosedur_pasien","?,?,?,?","ICD 9",4,new String[]{
                         norawat,tbProsedur.getValueAt(i,1).toString(),status,Sequel.cariIsi("select ifnull(MAX(prioritas)+1,1) from prosedur_pasien where no_rawat=? and status='"+status+"'",norawat)
                     });
+                    
+                    if(index==1){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_utama=?",2,new String[]{
+                            tbProsedur.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==2){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder=?",2,new String[]{
+                            tbProsedur.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==3){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder2=?",2,new String[]{
+                            tbProsedur.getValueAt(i,1).toString(),norawat
+                        });
+                    }else if(index==4){
+                        Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder3=?",2,new String[]{
+                            tbProsedur.getValueAt(i,1).toString(),norawat
+                        });
+                    }
+                        
+                    index++;
                 }                    
             }
             koneksi.setAutoCommit(true);  

@@ -177,7 +177,7 @@ public class DlgBilingPiutang extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rincian Piutang Pasien ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(70, 70, 70))); // NOI18N
+        internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Rincian Piutang Pasien ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50,50,50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
 
@@ -185,7 +185,6 @@ public class DlgBilingPiutang extends javax.swing.JDialog {
         Scroll.setOpaque(true);
 
         tbAdmin.setAutoCreateRowSorter(true);
-        tbAdmin.setToolTipText("Silahkan klik untuk memilih data yang mau diedit ataupun dihapus");
         tbAdmin.setName("tbAdmin"); // NOI18N
         Scroll.setViewportView(tbAdmin);
 
@@ -261,7 +260,7 @@ private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             JOptionPane.showMessageDialog(null,"Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
             BtnKeluar.requestFocus();
         }else if(tabModeRwJlDr.getRowCount()!=0){            
-            Sequel.queryu("delete from temporary_bayar_ranap");
+            Sequel.queryu("truncate table temporary_bayar_ranap");
                 int row=tabModeRwJlDr.getRowCount();
                 for(int r=0;r<row;r++){  
                     if(tabModeRwJlDr.getValueAt(r,0).toString().equals("true")){
@@ -375,7 +374,7 @@ private void BtnKeluarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         //jur.simpanJurnal(TNoRw.getText(),Valid.SetTgl(DTPTgl.getSelectedItem()+""),"U","PEMBATALAN BAYAR PIUTANG RAWAT JALAN");
                     }
 
-                    jur.simpanJurnal(TNoRw.getText(),Sequel.cariIsi("select current_date()"),"U","PEMBATALAN PIUTANG PASIEN RAWAT JALAN");
+                    jur.simpanJurnal(TNoRw.getText(),Sequel.cariIsi("select current_date()"),"U","PEMBATALAN PIUTANG PASIEN RAWAT JALAN"+", OLEH "+akses.getkode());
                 }else if(status.equals("Ranap")){
                     Sequel.queryu2("delete from piutang_pasien where no_rawat='"+TNoRw.getText()+"'");
                     Sequel.queryu2("delete from tampjurnal");                    
@@ -440,7 +439,7 @@ private void BtnKeluarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                          //jur.simpanJurnal(TNoRw.getText(),Valid.SetTgl(DTPTgl.getSelectedItem()+""),"U","PEMBATALAN BAYAR PIUTANG RAWAT INAP");
                     }  
 
-                    jur.simpanJurnal(TNoRw.getText(),Sequel.cariIsi("select current_date()"),"U","PEMBATALAN PIUTANG PASIEN RAWAT INAP");
+                    jur.simpanJurnal(TNoRw.getText(),Sequel.cariIsi("select current_date()"),"U","PEMBATALAN PIUTANG PASIEN RAWAT INAP"+", OLEH "+akses.getkode());
                 }
                 this.setCursor(Cursor.getDefaultCursor());
             }
